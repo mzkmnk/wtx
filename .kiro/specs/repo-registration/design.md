@@ -36,6 +36,7 @@
 - **serde_json**: JSON 処理
 - **anyhow**: エラーハンドリング
 - **thiserror**: カスタムエラー型定義
+- **dirs**: ホームディレクトリパス解決（`~/.wtx` 用）
 
 ## コンポーネントとインターフェース
 
@@ -266,14 +267,14 @@ _プロパティとは、システムのすべての有効な実行において�
 *任意の*リポジトリに対して、list コマンドの出力には、リポジトリ名、リモート URL、ローカルパスのすべてが含まれていなければならない
 **検証: 要件 2.2**
 
-### プロパティ 6: unregister 後の config.json エントリ削除
-
-*任意の*登録済みリポジトリに対して、unregister コマンドが成功した場合、config.json から該当するエントリが削除されなければならない
-**検証: 要件 3.1**
-
-### プロパティ 7: unregister 後のディレクトリ削除
+### プロパティ 6: unregister 後のディレクトリ削除
 
 *任意の*登録済みリポジトリに対して、unregister コマンドが成功した場合、ローカルパスの bare リポジトリディレクトリが削除されなければならない
+**検証: 要件 3.1**
+
+### プロパティ 7: unregister 後の config.json エントリ削除
+
+*任意の*登録済みリポジトリに対して、ディレクトリ削除が成功した場合のみ、config.json から該当するエントリが削除されなければならない
 **検証: 要件 3.2**
 
 ### プロパティ 8: 未登録リポジトリの unregister 拒否
@@ -293,7 +294,7 @@ _プロパティとは、システムのすべての有効な実行において�
 
 ### プロパティ 11: リポジトリ名抽出の正確性
 
-*任意の*Git URL に対して、extract_repo_name 関数は、URL の最後のパスコンポーネントから.git 拡張子を除いた文字列を返さなければならない
+*任意の*Git URL に対して、extract_repo_name 関数は、URL の最後のパスコンポーネントから.git 拡張子（存在する場合）を除いた文字列を返さなければならない
 **検証: 要件 4.4**
 
 ### プロパティ 12: バックアップ作成
@@ -467,12 +468,24 @@ src/
 ### URL 検証パターン
 
 ```rust
-// SSH形式: git@github.com:org/repo.git
-const SSH_PATTERN: &str = r"^git@[\w\.\-]+:[\w\-]+/[\w\-]+\.git$";
+// SSH形式: git@github.com:org/repo.git または git@github.com:org/team/repo.git
+// ネストしたパス、アンダースコア、.git拡張子なしにも対応
+const SSH_PATTERN: &str = r"^git@[\w\.\-]+:[\w\.\-_/]+?(?:\.git)?$";
 
-// HTTPS形式: https://github.com/org/repo.git
-const HTTPS_PATTERN: &str = r"^https://[\w\.\-]+/[\w\-]+/[\w\-]+\.git$";
+// HTTPS形式: https://github.com/org/repo.git または https://github.com/org/repo
+// ネストしたパス、アンダースコア、.git拡張子なしにも対応
+const HTTPS_PATTERN: &str = r"^https://[\w\.\-]+/[\w\.\-_/]+?(?:\.git)?$";
 ```
+
+**対応する URL 形式の例:**
+
+- `git@github.com:org/repo.git` (SSH、標準)
+- `git@github.com:org/repo` (SSH、.git なし)
+- `git@github.com:org/team/repo.git` (SSH、ネストパス)
+- `https://github.com/org/repo.git` (HTTPS、標準)
+- `https://github.com/org/repo` (HTTPS、.git なし)
+- `https://github.com/org/team/repo.git` (HTTPS、ネストパス)
+- `git@github.com:my_org/my_repo.git` (アンダースコア含む)
 
 ### パフォーマンス考慮事項
 
