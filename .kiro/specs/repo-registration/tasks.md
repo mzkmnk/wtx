@@ -1,6 +1,6 @@
 # 実装計画
 
-- [ ] 1. ratatui プロジェクトの初期セットアップ
+- [x] 1. ratatui プロジェクトの初期セットアップ
 
   - `cargo generate ratatui/templates simple`を実行してプロジェクト構造を生成
   - 生成されたテンプレートを確認（UI の実装は行わない）
