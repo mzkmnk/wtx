@@ -1,4 +1,4 @@
-use std::fs::{copy, create_dir_all, read_to_string, write};
+use std::fs::{copy, create_dir_all, read_to_string, remove_file, write};
 use std::path::PathBuf;
 
 use serde_json::{from_str, to_string_pretty};
@@ -74,7 +74,11 @@ impl ConfigManager {
     }
 
     pub fn delete_backup(&self) -> Result<(), RegistrationError> {
-        todo!()
+        if self.backup_path.exists() {
+            remove_file(&self.backup_path)?;
+        }
+
+        Ok(())
     }
 }
 
