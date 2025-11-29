@@ -23,7 +23,12 @@ impl GitOperations {
     }
 
     pub fn extract_repo_name(&self, url: &str) -> Result<String, RegistrationError> {
-        todo!()
+        let last_name = url.split("/").last().unwrap();
+        let repo_name = last_name
+            .strip_suffix(".git")
+            .unwrap_or(last_name)
+            .to_string();
+        Ok(repo_name)
     }
 
     pub fn bare_clone(&self, url: &str, target_path: &Path) -> Result<(), RegistrationError> {
