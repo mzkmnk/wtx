@@ -51,7 +51,7 @@
   - テストが失敗することを確認（Red）
   - _要件: 1.1, 4.1, 4.2, 4.3, 4.4_
 
-- [ ] 4.2 GitOperations 構造体の実装
+- [x] 4.2 GitOperations 構造体の実装
 
   - GitOperations 構造体と new()メソッドを実装
   - validate_url()メソッドを実装（SSH/HTTPS 形式の検証）
