@@ -1,4 +1,7 @@
+use std::fs::read_to_string;
 use std::path::PathBuf;
+
+use serde_json::from_str;
 
 use crate::models::error::RegistrationError;
 use crate::models::Config;
@@ -25,7 +28,14 @@ impl ConfigManager {
     }
 
     pub fn load(&self) -> Result<Config, RegistrationError> {
-        todo!()
+        if !self.config_path.exists() {
+            return Ok(Config::new());
+        }
+
+        let content = read_to_string(&self.config_path)?;
+        let config = from_str(&content)?;
+
+        Ok(config)
     }
 
     pub fn save(&self, config: &Config) -> Result<(), RegistrationError> {
