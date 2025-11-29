@@ -52,7 +52,7 @@ impl ConfigManager {
     pub fn create_backup(&self) -> Result<(), RegistrationError> {
         if !self.config_path.exists() {
             return Err(RegistrationError::BackupError(
-                "config.jsonが存在しません。".to_string(),
+                "Cannot create backup: config.json not found".to_string(),
             ));
         }
 
