@@ -1,5 +1,7 @@
 use std::path::Path;
 
+use regex::Regex;
+
 use crate::models::RegistrationError;
 
 pub struct GitOperations;
@@ -10,7 +12,14 @@ impl GitOperations {
     }
 
     pub fn validate_url(&self, url: &str) -> Result<(), RegistrationError> {
-        todo!()
+        let https_pattern = Regex::new(r"^https://[\w\.\-]+/[\w\.\-_/]+?(?:\.git)?$").unwrap();
+        let ssh_pattern = Regex::new(r"^git@[\w\.\-]+:[\w\.\-_/]+?(?:\.git)?$").unwrap();
+
+        if https_pattern.is_match(url) || ssh_pattern.is_match(url) {
+            Ok(())
+        } else {
+            Err(RegistrationError::InvalidUrl(url.to_string()))
+        }
     }
 
     pub fn extract_repo_name(&self, url: &str) -> Result<String, RegistrationError> {
