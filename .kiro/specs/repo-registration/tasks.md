@@ -43,7 +43,7 @@
   - **検証: 要件 6.5**
 
 - [ ] 4. Git 操作機能の実装（TDD）
-- [ ] 4.1 GitOperations のテストを作成
+- [x] 4.1 GitOperations のテストを作成
 
   - validate_url()メソッドのテスト（SSH/HTTPS 形式の検証）
   - extract_repo_name()メソッドのテスト（URL からリポジトリ名を抽出）
