@@ -1,5 +1,6 @@
 use std::path::Path;
 
+use git2::build::RepoBuilder;
 use regex::Regex;
 
 use crate::models::RegistrationError;
@@ -32,7 +33,11 @@ impl GitOperations {
     }
 
     pub fn bare_clone(&self, url: &str, target_path: &Path) -> Result<(), RegistrationError> {
-        todo!()
+        RepoBuilder::new()
+            .bare(true)
+            .clone(url, target_path)
+            .map(|_| ())
+            .map_err(RegistrationError::GitError)
     }
 }
 
