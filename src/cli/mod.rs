@@ -5,11 +5,11 @@ use clap::{Parser, Subcommand};
 #[command(about = "Git worktree and workspace manager")]
 pub struct Cli {
     #[command(subcommand)]
-    command: Commands,
+    pub command: Commands,
 }
 
 #[derive(Subcommand)]
-enum Commands {
+pub enum Commands {
     Register { url: String },    // wtx register <url>
     List,                        // wtx list
     Unregister { name: String }, // wtx unregister <name>
