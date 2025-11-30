@@ -168,7 +168,7 @@
   - テストが失敗することを確認（Red）
   - _要件: 1.1, 1.2, 1.3, 1.4, 1.5_
 
-- [ ] 7.4 register コマンドハンドラーの実装
+- [x] 7.4 register コマンドハンドラーの実装
 
   - commands/register.rs を実装
   - RepositoryService の register()を呼び出し
@@ -183,7 +183,7 @@
   - テストが失敗することを確認（Red）
   - _要件: 2.1, 2.2, 2.3, 2.4, 2.5_
 
-- [ ] 7.6 list コマンドハンドラーの実装
+- [x] 7.6 list コマンドハンドラーの実装
 
   - commands/list.rs を実装
   - RepositoryService の list()を呼び出し
@@ -199,7 +199,7 @@
   - テストが失敗することを確認（Red）
   - _要件: 3.1, 3.2, 3.3, 3.4, 3.5_
 
-- [ ] 7.8 unregister コマンドハンドラーの実装
+- [x] 7.8 unregister コマンドハンドラーの実装
 
   - commands/unregister.rs を実装
   - RepositoryService の unregister()を呼び出し
