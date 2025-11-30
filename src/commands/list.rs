@@ -1,1 +1,9 @@
-// List command handler will be implemented in task 7.6
+use crate::{
+    models::{RegistrationError, Repository},
+    service::repository::RepositoryService,
+};
+
+pub fn execute() -> Result<Vec<Repository>, RegistrationError> {
+    let repository_service = RepositoryService::new()?;
+    Ok(repository_service.list()?)
+}
