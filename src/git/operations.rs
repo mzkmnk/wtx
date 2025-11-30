@@ -10,7 +10,6 @@ pub struct GitOperations;
 
 impl GitOperations {
     pub fn validate_url(&self, url: &str) -> Result<(), RegistrationError> {
-
         // allow local path
         if Path::new(url).exists() {
             return Ok(());
