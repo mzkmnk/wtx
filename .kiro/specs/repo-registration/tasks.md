@@ -76,7 +76,7 @@
   - **検証: 要件 4.4**
 
 - [ ] 5. リポジトリサービスの実装（TDD）
-- [ ] 5.1 RepositoryService のテストを作成
+- [x] 5.1 RepositoryService のテストを作成
 
   - register()メソッドのテスト（バックアップ作成、bare クローン、config 更新）
   - list()メソッドのテスト（登録済みリポジトリの一覧取得）
