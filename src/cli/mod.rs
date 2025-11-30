@@ -12,5 +12,5 @@ pub struct Cli {
 enum Commands {
     Register { url: String },    // wtx register <url>
     List,                        // wtx list
-    Unregister { name: String }, //wtx unregister <name>
+    Unregister { name: String }, // wtx unregister <name>
 }
