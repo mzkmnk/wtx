@@ -10,6 +10,12 @@ pub struct GitOperations;
 
 impl GitOperations {
     pub fn validate_url(&self, url: &str) -> Result<(), RegistrationError> {
+
+        // allow local path
+        if Path::new(url).exists() {
+            return Ok(());
+        }
+
         let https_pattern = Regex::new(r"^https://[\w\.\-]+/[\w\.\-_/]+?(?:\.git)?$").unwrap();
         let ssh_pattern = Regex::new(r"^git@[\w\.\-]+:[\w\.\-_/]+?(?:\.git)?$").unwrap();
 
