@@ -10,6 +10,11 @@ pub struct GitOperations;
 
 impl GitOperations {
     pub fn validate_url(&self, url: &str) -> Result<(), RegistrationError> {
+        // allow local path
+        if Path::new(url).exists() {
+            return Ok(());
+        }
+
         let https_pattern = Regex::new(r"^https://[\w\.\-]+/[\w\.\-_/]+?(?:\.git)?$").unwrap();
         let ssh_pattern = Regex::new(r"^git@[\w\.\-]+:[\w\.\-_/]+?(?:\.git)?$").unwrap();
 
@@ -21,6 +26,13 @@ impl GitOperations {
     }
 
     pub fn extract_repo_name(&self, url: &str) -> Result<String, RegistrationError> {
+        // uses Path crate when local path
+        if let Some(file_name) = Path::new(url).file_name() {
+            let name = file_name.to_string_lossy();
+            let repo_name = name.strip_suffix(".git").unwrap_or(&name).to_string();
+            return Ok(repo_name);
+        }
+
         let last_name = url.split("/").last().unwrap();
         let repo_name = last_name
             .strip_suffix(".git")
