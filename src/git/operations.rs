@@ -5,13 +5,10 @@ use regex::Regex;
 
 use crate::models::RegistrationError;
 
+#[derive(Default)]
 pub struct GitOperations;
 
 impl GitOperations {
-    pub fn new() -> Self {
-        Self {}
-    }
-
     pub fn validate_url(&self, url: &str) -> Result<(), RegistrationError> {
         let https_pattern = Regex::new(r"^https://[\w\.\-]+/[\w\.\-_/]+?(?:\.git)?$").unwrap();
         let ssh_pattern = Regex::new(r"^git@[\w\.\-]+:[\w\.\-_/]+?(?:\.git)?$").unwrap();
@@ -54,7 +51,7 @@ mod tests {
 
     #[test]
     fn test_validate_url_https_valid() {
-        let git_operations = GitOperations::new();
+        let git_operations = GitOperations::default();
 
         assert!(git_operations
             .validate_url("https://github.com/org/repo.git")
@@ -71,7 +68,7 @@ mod tests {
 
     #[test]
     fn test_validate_url_ssh_valid() {
-        let git_operations = GitOperations::new();
+        let git_operations = GitOperations::default();
 
         assert!(git_operations
             .validate_url("git@github.com:org/repo.git")
@@ -92,7 +89,7 @@ mod tests {
 
     #[test]
     fn test_validate_url_invalid() {
-        let git_operations = GitOperations::new();
+        let git_operations = GitOperations::default();
 
         assert!(git_operations.validate_url("").is_err());
 
@@ -105,7 +102,7 @@ mod tests {
 
     #[test]
     fn test_extract_repo_name() {
-        let git_operations = GitOperations::new();
+        let git_operations = GitOperations::default();
 
         assert_eq!(
             git_operations
@@ -165,7 +162,7 @@ mod tests {
         let source_repo = dir.path().join("source");
         git2::Repository::init(&source_repo).unwrap();
 
-        let git_operations = GitOperations::new();
+        let git_operations = GitOperations::default();
 
         assert!(git_operations
             .bare_clone(source_repo.to_str().unwrap(), &target_path)
