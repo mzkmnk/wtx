@@ -31,7 +31,7 @@
   - _要件: 6.1, 6.2, 6.3_
 
 - [ ] 2. WorktreeManager の実装（TDD）
-- [ ] 2.1 WorktreeManager のテストを作成
+- [-] 2.1 WorktreeManager のテストを作成
 
   - create_worktree() のテスト（既存ブランチ、新規ブランチ）
   - remove_worktree() のテスト
