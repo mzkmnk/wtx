@@ -9,7 +9,7 @@
   - BranchInfo（名前、デフォルトフラグ）を定義
   - _要件: 1.1, 3.1_
 
-- [ ] 1.2 workspace ファイル関連のデータモデル定義
+- [x] 1.2 workspace ファイル関連のデータモデル定義
 
   - WorkspaceFile（folders、settings）を定義
   - WorkspaceFolder（path）を定義
