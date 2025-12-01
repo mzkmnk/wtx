@@ -16,7 +16,7 @@
   - Serialize/Deserialize を実装
   - _要件: 2.1, 5.1_
 
-- [ ] 1.3 操作結果のデータモデル定義
+- [x] 1.3 操作結果のデータモデル定義
 
   - CleanTarget（Workspace、All）を定義
   - GenerationResult（worktrees、workspace_file）を定義

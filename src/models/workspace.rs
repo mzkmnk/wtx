@@ -46,3 +46,22 @@ impl WorkspaceFile {
         }
     }
 }
+
+#[derive(Debug, Clone)]
+pub enum CleanTarget {
+    All,              // wtx clean --all
+    Worktree(String), // wtx clean <worktree>
+}
+
+#[derive(Debug)]
+pub struct GenerationResult {
+    pub worktrees: Vec<PathBuf>,
+    pub workspace_file: PathBuf,
+}
+
+#[derive(Debug)]
+pub struct CleanResult {
+    pub removed_worktrees: Vec<PathBuf>,
+    pub removed_workspace_files: Vec<PathBuf>,
+    pub warnings: Vec<String>,
+}
