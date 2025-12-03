@@ -47,6 +47,7 @@ pub fn create_test_config_file(base_dir: &Path, repos: Vec<Repository>) {
 }
 
 /// ja: テスト用のremote branchの作成
+///
 /// en: Create a remote branch for testing
 pub fn add_test_remote_branch(repo: &git2::Repository, branch_name: &str) {
     let tree_builder = repo.treebuilder(None).unwrap();
