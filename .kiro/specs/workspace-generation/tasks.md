@@ -87,7 +87,7 @@
   - テストが通ることを確認（Green）
   - _要件: 4.1_
 
-- [ ] 2.9 remove_worktree() のテストと実装
+- [x] 2.9 remove_worktree() のテストと実装
 
   - remove_worktree() のテストを作成（Red）
   - remove_worktree() を実装（prune 含む）

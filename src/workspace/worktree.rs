@@ -1,6 +1,6 @@
 use std::path::Path;
 
-use git2::{BranchType, Repository, WorktreeAddOptions};
+use git2::{BranchType, Repository, WorktreeAddOptions, WorktreePruneOptions};
 
 use crate::models::WtxError;
 
@@ -89,6 +89,22 @@ impl WorktreeManager {
         let worktrees = repo.worktrees()?;
 
         Ok(worktrees.iter().flatten().map(String::from).collect())
+    }
+
+    pub fn remove_worktree(
+        &self,
+        bare_repo_path: &Path,
+        worktree_name: &str,
+    ) -> Result<(), WtxError> {
+        let repo = Repository::open_bare(bare_repo_path)?;
+        let worktree = repo.find_worktree(worktree_name)?;
+
+        let mut opts = WorktreePruneOptions::new();
+        opts.valid(true).working_tree(true);
+
+        worktree.prune(Some(&mut opts))?;
+
+        Ok(())
     }
 }
 
