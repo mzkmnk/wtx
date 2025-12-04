@@ -61,7 +61,7 @@ impl WorktreeManager {
         target_path: &Path,
         branch: &str,
     ) -> Result<(), WtxError> {
-        let repo = Repository::open_bare(&bare_repo_path)?;
+        let repo = Repository::open_bare(bare_repo_path)?;
 
         let branch = repo.find_branch(&format!("origin/{}", branch), BranchType::Remote)?;
         let reference = branch.into_reference();
@@ -76,11 +76,9 @@ impl WorktreeManager {
                 repo.worktree(name, target_path, Some(&opts))?;
                 Ok(())
             }
-            None => {
-                return Err(WtxError::InvalidUrl(
-                    target_path.to_string_lossy().to_string(),
-                ))
-            }
+            None => Err(WtxError::InvalidUrl(
+                target_path.to_string_lossy().to_string(),
+            )),
         }
     }
 

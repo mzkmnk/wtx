@@ -5,5 +5,5 @@ use crate::{
 
 pub fn execute() -> Result<Vec<Repository>, WtxError> {
     let repository_service = RepositoryService::new()?;
-    Ok(repository_service.list()?)
+    repository_service.list()
 }
