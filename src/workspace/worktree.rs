@@ -9,7 +9,7 @@ pub struct WorktreeManager;
 
 impl WorktreeManager {
     pub fn fetch(&self, bare_repo_path: &Path) -> Result<(), WtxError> {
-        let repo = Repository::open(bare_repo_path)?;
+        let repo = Repository::open_bare(bare_repo_path)?;
 
         let mut remote = repo.find_remote("origin")?;
 
