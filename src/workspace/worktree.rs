@@ -4,10 +4,16 @@ use git2::{BranchType, Repository, WorktreeAddOptions, WorktreePruneOptions};
 
 use crate::models::WtxError;
 
+/// en: Manager for Git worktree operations
+///
+/// ja: Git worktree操作を管理するマネージャー
 #[derive(Default)]
 pub struct WorktreeManager;
 
 impl WorktreeManager {
+    /// en: Fetch latest changes from remote repository
+    ///
+    /// ja: リモートリポジトリから最新の変更をフェッチ
     pub fn fetch(&self, bare_repo_path: &Path) -> Result<(), WtxError> {
         let repo = Repository::open_bare(bare_repo_path)?;
 
@@ -18,6 +24,9 @@ impl WorktreeManager {
         Ok(())
     }
 
+    /// en: Get all remote branches from the bare repository
+    ///
+    /// ja: bareリポジトリから全てのリモートブランチを取得
     pub fn get_remote_branches(&self, bare_repo_path: &Path) -> Result<Vec<String>, WtxError> {
         let repo = Repository::open_bare(bare_repo_path)?;
         let branches = repo.branches(Some(BranchType::Remote))?;
@@ -34,6 +43,9 @@ impl WorktreeManager {
         Ok(remote_branches)
     }
 
+    /// en: Check if a branch exists in the remote repository
+    ///
+    /// ja: リモートリポジトリにブランチが存在するか確認
     pub fn branch_exists(
         &self,
         bare_repo_path: &Path,
@@ -55,6 +67,9 @@ impl WorktreeManager {
         Ok(false)
     }
 
+    /// en: Create a worktree from a bare repository for the specified branch
+    ///
+    /// ja: bareリポジトリから指定ブランチのworktreeを作成
     pub fn create_worktree(
         &self,
         bare_repo_path: &Path,
@@ -82,6 +97,9 @@ impl WorktreeManager {
         }
     }
 
+    /// en: List all worktrees associated with the bare repository
+    ///
+    /// ja: bareリポジトリに関連付けられた全てのworktreeを一覧表示
     pub fn list_worktrees(&self, bare_repo_path: &Path) -> Result<Vec<String>, WtxError> {
         let repo = Repository::open_bare(bare_repo_path)?;
         let worktrees = repo.worktrees()?;
@@ -89,6 +107,9 @@ impl WorktreeManager {
         Ok(worktrees.iter().flatten().map(String::from).collect())
     }
 
+    /// en: Remove a worktree and prune its references from the bare repository
+    ///
+    /// ja: worktreeを削除し、bareリポジトリからその参照をprune
     pub fn remove_worktree(
         &self,
         bare_repo_path: &Path,
