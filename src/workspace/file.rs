@@ -1,9 +1,6 @@
 use std::{fs, path::Path};
 
-use crate::{
-    models::{workspace::WorkspaceFile, WtxError},
-    workspace,
-};
+use crate::models::{workspace::WorkspaceFile, WtxError};
 
 #[derive(Default)]
 pub struct WorkspaceFileManager;
