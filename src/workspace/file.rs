@@ -1,6 +1,9 @@
 use std::{fs, path::Path};
 
-use crate::models::{workspace::WorkspaceFile, WtxError};
+use crate::{
+    models::{workspace::WorkspaceFile, WtxError},
+    workspace,
+};
 
 #[derive(Default)]
 pub struct WorkspaceFileManager;
@@ -29,11 +32,18 @@ impl WorkspaceFileManager {
 
         Ok(())
     }
+
+    pub fn read(&self, path: &Path) -> Result<WorkspaceFile, WtxError> {
+        let content = fs::read_to_string(path)?;
+        Ok(serde_json::from_str(&content)?)
+    }
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::utils::test_helpers::{create_test_git_repo, setup_test_dirs};
+    use crate::utils::test_helpers::{
+        create_test_git_repo, setup_test_dirs, test_create_workspace_file,
+    };
 
     use super::*;
 
@@ -92,5 +102,38 @@ mod tests {
             .is_err());
 
         assert!(parent_path.join("wtx.code-workspace").exists());
+    }
+
+    #[test]
+    fn test_read() {
+        let (dir, _base_dir) = setup_test_dirs();
+        let parent_path = dir.path().join("work");
+        let frontend_repo_path = create_test_git_repo(&parent_path, "frontend");
+        let backend_repo_path = create_test_git_repo(&parent_path, "backend");
+
+        test_create_workspace_file(
+            &parent_path,
+            "wtx",
+            vec![
+                frontend_repo_path.to_string_lossy().to_string(),
+                backend_repo_path.to_string_lossy().to_string(),
+            ],
+        );
+
+        let workspace_file_manager = WorkspaceFileManager::default();
+
+        let workspace_file = workspace_file_manager
+            .read(&parent_path.join("wtx.code-workspace"))
+            .unwrap();
+
+        assert_eq!(workspace_file.folders.len(), 2);
+        assert_eq!(
+            workspace_file.folders[0].path,
+            frontend_repo_path.to_string_lossy().to_string()
+        );
+        assert_eq!(
+            workspace_file.folders[1].path,
+            backend_repo_path.to_string_lossy().to_string()
+        );
     }
 }
