@@ -164,6 +164,22 @@ mod tests {
     }
 
     #[test]
+    fn test_read_invalid_json() {
+        let (dir, _base_dir) = setup_test_dirs();
+        let parent_path = dir.path().join("work");
+
+        fs::create_dir_all(&parent_path).unwrap();
+
+        let workspace_file_manager = WorkspaceFileManager::default();
+
+        fs::write(parent_path.join("wtx.code-workspace"), "invalid json").unwrap();
+
+        assert!(workspace_file_manager
+            .read(&parent_path.join("wtx.code-workspace"))
+            .is_err())
+    }
+
+    #[test]
     fn test_exists() {
         let (_dir, _base_dir) = setup_test_dirs();
         let parent_path = _dir.path().join("work");
