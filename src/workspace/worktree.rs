@@ -98,7 +98,15 @@ impl WorktreeManager for DefaultWorktreeManager {
     ) -> Result<(), WtxError> {
         let repo = Repository::open_bare(bare_repo_path)?;
 
-        let branch = repo.find_branch(&format!("origin/{}", branch), BranchType::Remote)?;
+        let branch = match repo.find_branch(branch, BranchType::Local) {
+            Ok(b) => b,
+            Err(_) => {
+                let remote = repo.find_branch(&format!("origin/{}",branch), BranchType::Remote)?;
+                let commit = remote.get().peel_to_commit()?;
+                repo.branch(branch, &commit, false)?
+            }
+        };
+
         let reference = branch.into_reference();
 
         let mut opts = WorktreeAddOptions::new();

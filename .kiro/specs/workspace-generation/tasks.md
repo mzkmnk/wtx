@@ -236,14 +236,14 @@
   - テストが通ることを確認（Green）
   - _要件: 3.1, 3.2, 3.3, 3.4_
 
-- [ ] 5.3 generate() のテストと実装（単一 worktree）
+- [x] 5.3 generate() のテストと実装（単一 worktree）
 
   - generate() の単一 worktree テストを作成（Red）
   - generate() を実装（worktree 作成 + workspace 生成）
   - テストが通ることを確認（Green）
   - _要件: 1.1, 1.2, 1.3, 2.1, 2.2, 2.3, 2.4_
 
-- [ ] 5.4 generate() のテストと実装（複数 worktree）
+- [x] 5.4 generate() のテストと実装（複数 worktree）
 
   - generate() の複数 worktree テストを作成（Red）
   - generate() を拡張（複数 worktree 対応）
