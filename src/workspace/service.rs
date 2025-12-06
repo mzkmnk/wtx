@@ -2,7 +2,6 @@ use std::path::{Path, PathBuf};
 
 use crate::{
     models::{workspace::WorktreeSelection, WtxError},
-    utils::get_wtx_home,
     workspace::{file::WorkspaceFileManager, worktree::WorktreeManager},
 };
 
@@ -28,7 +27,8 @@ impl<W: WorktreeManager> WorkspaceGenerationService<W> {
     ///
     /// ja: 指定したリポジトリのブランチを返却する
     pub fn get_branches(&self, repo_name: &str) -> Result<Vec<String>, WtxError> {
-        let bare_repo_path = get_wtx_home().unwrap().join(format!("{}.git", repo_name));
+        let bare_repo_path = self.wtx_home.join(format!("{}.git", repo_name));
+        self.worktree_manager.fetch(&bare_repo_path)?;
         self.worktree_manager.get_remote_branches(&bare_repo_path)
     }
 
@@ -89,6 +89,7 @@ mod tests {
         let (_dir, base_dir) = setup_test_dirs();
         let mut mock_worktree_manager = MockWorktreeManager::new();
 
+        mock_worktree_manager.expect_fetch().returning(|_| Ok(()));
         mock_worktree_manager
             .expect_get_remote_branches()
             .returning(|_| Ok(vec!["origin/main".to_string(), "origin/dev".to_string()]));
