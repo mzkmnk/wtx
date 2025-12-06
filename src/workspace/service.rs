@@ -18,7 +18,7 @@ pub struct WorkspaceGenerationService<W: WorktreeManager> {
 impl<W: WorktreeManager> WorkspaceGenerationService<W> {
     pub fn new(worktree_manager: W, wtx_home: PathBuf) -> Result<Self, WtxError> {
         Ok(Self {
-            workspace_file_manager: WorkspaceFileManager::default(),
+            workspace_file_manager: WorkspaceFileManager,
             worktree_manager,
             wtx_home,
         })
