@@ -37,6 +37,14 @@ impl WorkspaceFileManager {
         let content = fs::read_to_string(path)?;
         Ok(serde_json::from_str(&content)?)
     }
+
+    /// en: Check if a workspace file exists at the specified path
+    ///
+    /// ja: 指定されたパスにworkspaceファイルが存在するか確認
+    pub fn exists(&self, working_dir: &Path, workspace_name: &str) -> bool {
+        let workspace_file_path = working_dir.join(format!("{}.code-workspace", workspace_name));
+        workspace_file_path.exists()
+    }
 }
 
 #[cfg(test)]
@@ -49,8 +57,8 @@ mod tests {
 
     #[test]
     fn test_generate() {
-        let (dir, _base_dir) = setup_test_dirs();
-        let parent_path = dir.path().join("work");
+        let (_dir, _base_dir) = setup_test_dirs();
+        let parent_path = _dir.path().join("work");
         let frontend_repo_path = create_test_git_repo(&parent_path, "frontend");
         let backend_repo_path = create_test_git_repo(&parent_path, "backend");
 
@@ -135,5 +143,23 @@ mod tests {
             workspace_file.folders[1].path,
             backend_repo_path.to_string_lossy().to_string()
         );
+    }
+
+    #[test]
+    fn test_exists() {
+        let (_dir, _base_dir) = setup_test_dirs();
+        let parent_path = _dir.path().join("work");
+        let frontend_repo_path = create_test_git_repo(&parent_path, "frontend");
+
+        test_create_workspace_file(
+            &parent_path,
+            "wtx",
+            vec![frontend_repo_path.to_string_lossy().to_string()],
+        );
+
+        let workspace_file_manager = WorkspaceFileManager::default();
+
+        assert!(workspace_file_manager.exists(&parent_path, "wtx"));
+        assert!(!workspace_file_manager.exists(&parent_path, "nonexistent"));
     }
 }
