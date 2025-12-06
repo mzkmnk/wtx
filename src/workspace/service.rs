@@ -32,6 +32,9 @@ impl<W: WorktreeManager> WorkspaceGenerationService<W> {
         self.worktree_manager.get_remote_branches(&bare_repo_path)
     }
 
+    /// en: Generate workspace with worktrees from the specified selections
+    ///
+    /// ja: 指定された選択からworktreeを含むworkspaceを生成する
     pub fn generate(
         &self,
         working_dir: &Path,
