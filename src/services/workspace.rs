@@ -5,7 +5,9 @@ use crate::{
     models::{workspace::WorktreeSelection, WtxError},
 };
 
-/// worktreeを含むworkspaceを生成するサービス
+/// en: Service for generating workspaces with worktrees
+///
+/// ja: worktreeを含むworkspaceを生成するサービス
 pub struct WorkspaceGenerationService<W: WorktreeManager> {
     worktree_manager: W,
     workspace_file_manager: WorkspaceFileManager,
@@ -21,14 +23,18 @@ impl<W: WorktreeManager> WorkspaceGenerationService<W> {
         })
     }
 
-    /// 指定したリポジトリのブランチを返却する
+    /// en: Returns the list of branches for the specified repository
+    ///
+    /// ja: 指定したリポジトリのブランチを返却する
     pub fn get_branches(&self, repo_name: &str) -> Result<Vec<String>, WtxError> {
         let bare_repo_path = self.wtx_home.join(format!("{}.git", repo_name));
         self.worktree_manager.fetch(&bare_repo_path)?;
         self.worktree_manager.get_remote_branches(&bare_repo_path)
     }
 
-    /// 指定された選択からworktreeを含むworkspaceを生成する
+    /// en: Generate workspace with worktrees from the specified selections
+    ///
+    /// ja: 指定された選択からworktreeを含むworkspaceを生成する
     pub fn generate(
         &self,
         working_dir: &Path,

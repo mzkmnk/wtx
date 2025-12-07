@@ -24,35 +24,48 @@ pub trait WorktreeManager {
     fn remove_worktree(&self, bare_repo_path: &Path, worktree_name: &str) -> Result<(), WtxError>;
 }
 
-/// Git worktree操作を管理するマネージャー
+/// en: Manager for Git worktree operations
+///
+/// ja: Git worktree操作を管理するマネージャー
 #[derive(Default)]
 pub struct DefaultWorktreeManager;
 
 impl WorktreeManager for DefaultWorktreeManager {
-    /// リモートリポジトリから最新の変更をフェッチ
+    /// en: Fetch latest changes from remote repository
+    ///
+    /// ja: リモートリポジトリから最新の変更をフェッチ
     fn fetch(&self, bare_repo_path: &Path) -> Result<(), WtxError> {
         let repo = Repository::open_bare(bare_repo_path)?;
+
         let mut remote = repo.find_remote("origin")?;
+
         remote.fetch(&[] as &[&str], None, None)?;
+
         Ok(())
     }
 
-    /// bareリポジトリから全てのリモートブランチを取得
+    /// en: Get all remote branches from the bare repository
+    ///
+    /// ja: bareリポジトリから全てのリモートブランチを取得
     fn get_remote_branches(&self, bare_repo_path: &Path) -> Result<Vec<String>, WtxError> {
         let repo = Repository::open_bare(bare_repo_path)?;
         let branches = repo.branches(Some(BranchType::Remote))?;
 
         let mut remote_branches: Vec<String> = Vec::new();
+
         for branch in branches {
             let (branch, _branch_type) = branch?;
             if let Some(branch_name) = branch.name()? {
                 remote_branches.push(branch_name.to_string());
             }
         }
+
         Ok(remote_branches)
     }
 
-    /// リモートリポジトリにブランチが存在するか確認
+    /// en: Check if a branch exists in the remote repository
+    ///
+    /// ja: リモートリポジトリにブランチが存在するか確認
     fn branch_exists(
         &self,
         bare_repo_path: &Path,
@@ -70,10 +83,13 @@ impl WorktreeManager for DefaultWorktreeManager {
                 }
             }
         }
+
         Ok(false)
     }
 
-    /// bareリポジトリから指定ブランチのworktreeを作成
+    /// en: Create a worktree from a bare repository for the specified branch
+    ///
+    /// ja: bareリポジトリから指定ブランチのworktreeを作成
     fn create_worktree(
         &self,
         bare_repo_path: &Path,
@@ -92,6 +108,7 @@ impl WorktreeManager for DefaultWorktreeManager {
         };
 
         let reference = branch.into_reference();
+
         let mut opts = WorktreeAddOptions::new();
         opts.reference(Some(&reference));
 
@@ -108,20 +125,26 @@ impl WorktreeManager for DefaultWorktreeManager {
         }
     }
 
-    /// bareリポジトリに関連付けられた全てのworktreeを一覧表示
+    /// en: List all worktrees associated with the bare repository
+    ///
+    /// ja: bareリポジトリに関連付けられた全てのworktreeを一覧表示
     fn list_worktrees(&self, bare_repo_path: &Path) -> Result<Vec<String>, WtxError> {
         let repo = Repository::open_bare(bare_repo_path)?;
         let worktrees = repo.worktrees()?;
+
         Ok(worktrees.iter().flatten().map(String::from).collect())
     }
 
-    /// worktreeを削除し、bareリポジトリからその参照をprune
+    /// en: Remove a worktree and prune its references from the bare repository
+    ///
+    /// ja: worktreeを削除し、bareリポジトリからその参照をprune
     fn remove_worktree(&self, bare_repo_path: &Path, worktree_name: &str) -> Result<(), WtxError> {
         let repo = Repository::open_bare(bare_repo_path)?;
         let worktree = repo.find_worktree(worktree_name)?;
 
         let mut opts = WorktreePruneOptions::new();
         opts.valid(true).working_tree(true);
+
         worktree.prune(Some(&mut opts))?;
 
         Ok(())

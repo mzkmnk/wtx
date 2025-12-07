@@ -98,7 +98,9 @@ mod tests {
         let git_operations = GitOperations::default();
 
         assert!(git_operations.validate_url("").is_err());
+
         assert!(git_operations.validate_url("https://github.com").is_err());
+
         assert!(git_operations
             .validate_url("git@github.com/org/repo.git")
             .is_err());
@@ -124,7 +126,28 @@ mod tests {
 
         assert_eq!(
             git_operations
+                .extract_repo_name("https://github.com/org/team/repo.git")
+                .unwrap(),
+            "repo".to_string()
+        );
+
+        assert_eq!(
+            git_operations
                 .extract_repo_name("git@github.com:org/repo.git")
+                .unwrap(),
+            "repo".to_string()
+        );
+
+        assert_eq!(
+            git_operations
+                .extract_repo_name("git@github.com:org/team/repo.git")
+                .unwrap(),
+            "repo".to_string(),
+        );
+
+        assert_eq!(
+            git_operations
+                .extract_repo_name("git@github.com:org/repo")
                 .unwrap(),
             "repo".to_string()
         );
