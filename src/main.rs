@@ -59,7 +59,7 @@ fn main() -> color_eyre::Result<()> {
             Err(e) => return Err(e.into()),
         },
         Commands::New { workspace_name } => {
-            todo!()
+            commands::new::execute(workspace_name)?;
         }
         Commands::Unregister { name: _name } => {
             todo!()
