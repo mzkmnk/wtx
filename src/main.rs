@@ -52,7 +52,7 @@ fn main() -> color_eyre::Result<()> {
                         let tree = TreeBuilder::new(repo.name.clone())
                             .add_empty_child(repo.remote.clone())
                             .build();
-                        print_tree_with(&tree, &config).ok();
+                        print_tree_with(&tree, &config)?;
                     }
                 }
             }
