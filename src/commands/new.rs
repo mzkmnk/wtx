@@ -1,3 +1,5 @@
+use std::fs;
+
 use dialoguer::{Input, MultiSelect};
 
 use crate::{
@@ -35,14 +37,15 @@ pub fn execute(workspace_name: String) -> Result<(), WtxError> {
                 });
             }
 
-            let working_dir = get_current_dir()?;
+            let workspace_dir = get_current_dir()?.join(&workspace_name);
+            fs::create_dir_all(&workspace_dir)?;
 
             match get_wtx_home() {
                 Some(wtx_home) => {
                     let worktree_manager = DefaultWorktreeManager::default();
 
                     WorkspaceGenerationService::new(worktree_manager, wtx_home)?.generate(
-                        &working_dir,
+                        &workspace_dir,
                         worktree_selection,
                         &workspace_name,
                     )?;

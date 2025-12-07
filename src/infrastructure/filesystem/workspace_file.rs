@@ -11,12 +11,12 @@ impl WorkspaceFileManager {
     /// ja: 指定されたフォルダを含むworkspaceファイルを生成
     pub fn generate(
         &self,
-        working_dir: &Path,
+        workspace_dir: &Path,
         workspace_name: &str,
         folders: Vec<String>,
     ) -> Result<(), WtxError> {
         let workspace_file = WorkspaceFile::new(folders);
-        let workspace_file_path = working_dir.join(format!("{}.code-workspace", workspace_name));
+        let workspace_file_path = workspace_dir.join(format!("{}.code-workspace", workspace_name));
 
         if workspace_file_path.exists() {
             return Err(WtxError::WorkspaceFileAlreadyExists(
