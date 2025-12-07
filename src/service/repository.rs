@@ -37,7 +37,7 @@ impl RepositoryService {
             .join(format!("{}.git", &repo_name));
 
         let mut config = self.config_manager.load()?;
-        
+
         config.add_repository(Repository {
             name: repo_name,
             remote: url.to_string(),
