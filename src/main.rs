@@ -36,7 +36,7 @@ fn main() -> color_eyre::Result<(), eyre::ErrReport> {
         Commands::List => {
             todo!()
         }
-        Commands::Unregister { name } => {
+        Commands::Unregister { name: _name } => {
             todo!()
         }
     }
