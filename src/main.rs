@@ -28,7 +28,7 @@ fn main() -> color_eyre::Result<()> {
             Ok(_) => println!("Registered: {}", style(url).cyan()),
             Err(e) => match e {
                 WtxError::AlreadyRegistered(_) => {
-                    println!("Already registered: {}", style(url).cyan())
+                    println!("{} {}", style("Already registered:").yellow(), style(url).cyan())
                 }
                 _ => return Err(e.into()),
             },
