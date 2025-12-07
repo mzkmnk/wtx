@@ -18,7 +18,7 @@ pub mod tui;
 pub mod utils;
 pub mod workspace;
 
-fn main() -> color_eyre::Result<(), eyre::ErrReport> {
+fn main() -> color_eyre::Result<()> {
     color_eyre::install()?;
 
     let cli = Cli::parse();
