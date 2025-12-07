@@ -1,6 +1,10 @@
 use clap::Parser;
+use console::style;
 
-use crate::cli::{Cli, Commands};
+use crate::{
+    cli::{Cli, Commands},
+    models::WtxError,
+};
 
 // Module declarations
 pub mod cli;
@@ -19,9 +23,23 @@ fn main() -> color_eyre::Result<()> {
     let cli = Cli::parse();
 
     match cli.command {
-        Commands::Register { url } => {}
-        Commands::List => {}
-        Commands::Unregister { name } => {
+        Commands::Register { url } => match commands::register::execute(&url) {
+            Ok(_) => println!("Registered: {}", style(url).cyan()),
+            Err(e) => match e {
+                WtxError::AlreadyRegistered(_) => {
+                    println!(
+                        "{} {}",
+                        style("Already registered:").yellow(),
+                        style(url).cyan()
+                    )
+                }
+                _ => return Err(e.into()),
+            },
+        },
+        Commands::List => {
+            todo!()
+        }
+        Commands::Unregister { name: _name } => {
             todo!()
         }
     }
