@@ -36,6 +36,15 @@ pub fn execute(workspace_name: String) -> Result<(), WtxError> {
             for idx in selected_repos {
                 let branch_name: String = Input::new()
                     .with_prompt(format!("Branch for {name}", name = repos[idx].name))
+                    .validate_with(|input: &String| -> Result<(), &str> {
+                        let trimmed = input.trim();
+
+                        if trimmed.is_empty() {
+                            return Err("Branch name cannot be empty");
+                        }
+
+                        Ok(())
+                    })
                     .interact_text()?;
 
                 worktree_selection.push(WorktreeSelection {
