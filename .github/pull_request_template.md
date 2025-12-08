@@ -1,18 +1,18 @@
-## 変更内容
+## Changes
 
-### 概要
+### Summary
 
-この PR で何を変更したかを簡潔に説明
+Briefly describe what this PR changes.
 
-### 変更の種類
+### Type of Change
 
-- [ ] 新機能 (feat)
-- [ ] バグ修正 (fix)
-- [ ] ドキュメント更新 (docs)
-- [ ] スタイル変更 (style)
-- [ ] リファクタリング (refactor)
-- [ ] パフォーマンス改善 (perf)
-- [ ] テスト追加/修正 (test)
-- [ ] ビルドツール/設定変更 (chore)
-- [ ] リリース (release)
-- [ ] その他 (other)
+- [ ] New feature (feat)
+- [ ] Bug fix (fix)
+- [ ] Documentation update (docs)
+- [ ] Style change (style)
+- [ ] Refactoring (refactor)
+- [ ] Performance improvement (perf)
+- [ ] Test addition/modification (test)
+- [ ] Build tools/configuration change (chore)
+- [ ] Release (release)
+- [ ] Other (other)
