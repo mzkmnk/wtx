@@ -5,6 +5,11 @@ description = "A CLI tool for managing Git worktrees and VSCode workspaces"
 authors = ["mzkmnk <mzk.mnk.dev@gmail.com>"]
 license = "MIT"
 edition = "2021"
+repository = "https://github.com/mzkmnk/wtx"
+homepage = "https://github.com/mzkmnk/wtx"
+readme = "README.md"
+keywords = ["git", "worktree", "workspace", "vscode", "cli"]
+categories = ["command-line-utilities", "development-tools"]
 
 [dependencies]
 crossterm = "0.29.0"

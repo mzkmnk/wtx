@@ -12,7 +12,17 @@ Git worktree と VSCode/Kiro workspace を統合管理する CLI ツール。
 
 ## インストール
 
+### crates.io から
+
 ```bash
+cargo install wtx
+```
+
+### ソースから
+
+```bash
+git clone https://github.com/mzkmnk/wtx.git
+cd wtx
 cargo install --path .
 ```
 

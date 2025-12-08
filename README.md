@@ -12,7 +12,17 @@ A CLI tool for managing Git worktrees and VSCode/Kiro workspaces.
 
 ## Installation
 
+### From crates.io
+
 ```bash
+cargo install wtx
+```
+
+### From source
+
+```bash
+git clone https://github.com/mzkmnk/wtx.git
+cd wtx
 cargo install --path .
 ```
 
