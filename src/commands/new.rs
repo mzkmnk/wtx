@@ -40,18 +40,14 @@ pub fn execute(workspace_name: String) -> Result<(), WtxError> {
             let workspace_dir = get_current_dir()?.join(&workspace_name);
             fs::create_dir_all(&workspace_dir)?;
 
-            match get_wtx_home() {
-                Some(wtx_home) => {
-                    let worktree_manager = DefaultWorktreeManager;
+            let wtx_home = get_wtx_home().ok_or(WtxError::HomeDirNotFound)?;
+            let worktree_manager = DefaultWorktreeManager;
 
-                    WorkspaceGenerationService::new(worktree_manager, wtx_home)?.generate(
-                        &workspace_dir,
-                        worktree_selection,
-                        &workspace_name,
-                    )?;
-                }
-                None => return Err(WtxError::HomeDirNotFound),
-            }
+            WorkspaceGenerationService::new(worktree_manager, wtx_home)?.generate(
+                &workspace_dir,
+                worktree_selection,
+                &workspace_name,
+            )?;
         }
         Err(_) => {
             todo!()
