@@ -33,7 +33,7 @@ pub enum WtxError {
     #[error("IO operation failed: {0}")]
     IoError(#[from] std::io::Error),
 
-    #[error("Dialoguer operation failed {0}")]
+    #[error("Dialoguer operation failed: {0}")]
     DialoguerError(#[from] dialoguer::Error),
 
     #[error("JSON parsing failed: {0}")]
