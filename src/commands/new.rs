@@ -31,7 +31,7 @@ pub fn execute(workspace_name: String) -> Result<(), WtxError> {
         Ok(selected_repos) => {
             for idx in selected_repos {
                 let branch_name: String = Input::new()
-                    .with_prompt(format!("Branch for {}", repos[idx].name))
+                    .with_prompt(format!("Branch for {name}", name = repos[idx].name))
                     .interact_text()?;
 
                 worktree_selection.push(WorktreeSelection {
