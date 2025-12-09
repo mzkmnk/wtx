@@ -128,8 +128,8 @@ pub trait WorkspaceService {
     fn list_workspaces(&self) -> Result<Vec<ManagedWorkspace>, WxError>;
 
     /// workspace を削除（clone ディレクトリも削除）
-    /// id は UUID または選択インデックス
-    fn remove_workspace(&self, id: &str) -> Result<RemoveWorkspaceResult, WxError>;
+    /// workspace_id は UUID のみを受け取る
+    fn remove_workspace(&self, workspace_id: &str) -> Result<RemoveWorkspaceResult, WxError>;
 
     /// 作業ディレクトリをクリーンアップ（現在のディレクトリのみ）
     fn clean(&self, target_dir: &Path) -> Result<CleanResult, WxError>;
