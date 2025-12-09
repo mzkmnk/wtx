@@ -54,7 +54,7 @@ impl<W: WorktreeManager> WorkspaceGenerationService<W> {
         // create worktrees
         for ws in worktree_selection {
             let bare_repo_path = self.wx_home.join(format!("{}.git", ws.repo_name));
-            let target_path = workspace_dir.join(&ws.branch.replace("/", "-"));
+            let target_path = workspace_dir.join(ws.branch.replace("/", "-"));
             self.worktree_manager
                 .create_worktree(&bare_repo_path, &target_path, &ws.branch)?;
         }

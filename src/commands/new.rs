@@ -56,8 +56,7 @@ pub fn execute(workspace_name: String) -> Result<(), WxError> {
             let workspace_dir = get_current_dir()?.join(&workspace_name);
             if workspace_dir.exists() {
                 return Err(WxError::General(format!(
-                    "Workspace directory '{}' already exists",
-                    workspace_name
+                    "Workspace directory '{workspace_name}' already exists"
                 )));
             }
             fs::create_dir_all(&workspace_dir)?;
