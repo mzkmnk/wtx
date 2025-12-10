@@ -2,7 +2,7 @@
 
 - [ ] 1. データモデルの更新
 
-  - [ ] 1.1 Repository 構造体を更新（remote → url、local_path 削除）
+  - [ ] 1.1 Repository 構造体を更新（remote → url に改名、local_path フィールド削除）
     - `src/models/repository.rs` を修正
     - `name: String`, `url: String` のみに変更
     - _Requirements: 1.1_
